@@ -1,0 +1,13 @@
+prefix=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision
+exec_prefix=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision
+libdir=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision/lib
+sharedlibdir=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision/lib
+includedir=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

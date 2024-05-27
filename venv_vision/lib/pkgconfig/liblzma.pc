@@ -1,0 +1,20 @@
+#
+# Author: Lasse Collin
+#
+# This file has been put into the public domain.
+# You can do whatever you want with this file.
+#
+
+prefix=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision
+exec_prefix=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision
+libdir=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision/lib
+includedir=/home/paulo/Desktop/github/Foundations-of-Computer-Vision/venv_vision/include
+
+Name: liblzma
+Description: General purpose data compression library
+URL: https://xz.tukaani.org/xz-utils/
+Version: 5.4.6
+Cflags: -I${includedir}
+Cflags.private: -DLZMA_API_STATIC
+Libs: -L${libdir} -llzma
+Libs.private: -pthread -lpthread
