@@ -9,3 +9,4 @@ data/checkpoints/*/
 other/
 *deteccao_de_pontos_salientes/
 *casamento_de_pontos_salientes/
+venv_vision/
