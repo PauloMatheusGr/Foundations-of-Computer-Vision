@@ -9,6 +9,7 @@ from dataset import get_dataset
 
 def seed_all(seed):
     "Semente para o pytorch, numpy e python."
+    
     torch.manual_seed(seed)
     random.seed(seed)
     np.random.seed(seed)
