@@ -17,24 +17,38 @@ def seed_all(seed):
 def show_log(logger):
     """Plota métricas em um notebook."""
 
-    epochs, losses_train, losses_valid, accs = zip(*logger)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9,3))
+    epochs, losses_train, losses_valid, accs, overall_param_min,\
+        overall_param_max, overall_grad_min, overall_grad_max = zip(*logger)
+    # print(overall_stats)
+    # overall_stats=overall_stats[0]
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(9,3))
     ax1.plot(epochs, losses_train, '-o', ms=2, label='Train loss')
     ax1.plot(epochs, losses_valid, '-o', ms=2, label='Valid loss')
     ax1.set_xlabel('Epoch')
     ax1.set_ylabel('Loss')
-    ax1.set_ylim((0,1.))
+    #ax1.set_ylim((0,2.))
     ax1.legend()
+    
     ax2.plot(epochs, accs, '-o', ms=2)
     ax2.set_xlabel('Epoch')
     ax2.set_ylabel('Accuracy')
-    ax2.set_ylim((0,1.))
+    #ax2.set_ylim((0,1.))
+    ax2.legend()
+    
+    ax3.plot(epochs, overall_param_min, '-o', ms=2, label='Param min')
+    ax3.plot(epochs, overall_param_max, '-o', ms=2, label='Param max')
+    ax3.plot(epochs, overall_grad_min, '-o', ms=2, label='grad min')
+    ax3.plot(epochs, overall_grad_max, '-o', ms=2, label='grad max')
+    ax3.set_xlabel('Epoch')
+    ax3.set_ylabel('Parametros')
+    #ax3.set_ylim((0,1.))
+    ax3.legend()
+    
     fig.tight_layout()
 
     display.clear_output(wait=True)
     plt.show()
-
+    
 def train_step(model, dl_train, optim, loss_func, scheduler, device):
     '''Executa uma época de treinamento.'''
 
@@ -93,7 +107,7 @@ def valid_step(model, dl_valid, loss_func, perf_func, device):
 
     return loss_log.item(), perf_log.item()
 
-def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
+def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, overall_stats=lambda x:x, 
           num_workers=5):
 
     # Fixa todas as seeds
@@ -122,7 +136,9 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
     for epoch in range(0, num_epochs):
         loss_train = train_step(model, dl_train, optim, loss_func, sched, device)
         loss_valid, perf = valid_step(model, dl_valid, loss_func, accuracy, device)
-        logger.append((epoch, loss_train, loss_valid, perf))
+        overall_param_min, overall_param_max, overall_grad_min, overall_grad_max = overall_stats(model)
+        logger.append((epoch, loss_train, loss_valid, perf, overall_param_min,\
+            overall_param_max, overall_grad_min, overall_grad_max))
 
         show_log(logger)
 
@@ -143,6 +159,5 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
             torch.save(checkpoint, '../data/checkpoints/M06/best_model.pt')
             best_loss = loss_valid
 
-    model.to('cpu')
-
+    # model.to('cpu')
     return ds_train, ds_valid, logger

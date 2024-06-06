@@ -134,15 +134,16 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
             'sched':sched.state_dict(),
             'logger':logger
         }
-
+        print('Antes')
         # Salva o estado atual
         torch.save(checkpoint, '../data/checkpoints/M06/checkpoint.pt')
-
+        print('Depois')
         # Melhor modelo encontrado
         if loss_valid<best_loss:
             torch.save(checkpoint, '../data/checkpoints/M06/best_model.pt')
             best_loss = loss_valid
 
-    model.to('cpu')
+    # model.to('cpu')
+    model.to('cuda')
 
     return ds_train, ds_valid, logger
