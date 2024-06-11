@@ -1,12 +1,3 @@
-import random
-import matplotlib.pyplot as plt
-import numpy as np
-import torch
-from torch import nn
-from torch.utils.data import DataLoader
-from IPython import display
-from dataset import get_dataset
-
 def get_model_stats(model):
     """Retorna estatísticas dos parâmetros de um modelo neural.
     
@@ -36,7 +27,7 @@ def get_model_stats(model):
     
     return stats
 
-# Passa a imagem pelo modelo para calcular os scores
+# # Passa a imagem pelo modelo para calcular os scores
 # scores = model(img)
 # # Calcula os gradientes (em um treinamento real seria loss.backward())
 # scores.sum().backward()
@@ -76,8 +67,4 @@ def get_overall_stats(stats):
 def get_four_stats(model):
     stats=get_model_stats(model)
     return get_overall_stats(stats)
-
-def show_img():
-    plt.imshow(np.random.randn(10, 10))
-    plt.show()
 

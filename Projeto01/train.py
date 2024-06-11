@@ -22,7 +22,8 @@ def show_log(logger):
         overall_param_max, overall_grad_min, overall_grad_max = zip(*logger)
     # print(overall_stats)
     # overall_stats=overall_stats[0]
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(9,3))
+    # fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(9,3))
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(18,6))
     ax1.plot(epochs, losses_train, '-o', ms=2, label='Train loss')
     ax1.plot(epochs, losses_valid, '-o', ms=2, label='Valid loss')
     ax1.set_xlabel('Epoch')
