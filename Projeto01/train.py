@@ -6,6 +6,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from IPython import display
 from dataset import get_dataset
+import modelstats 
 
 def seed_all(seed):
     "Semente para o pytorch, numpy e python."
@@ -107,7 +108,7 @@ def valid_step(model, dl_valid, loss_func, perf_func, device):
 
     return loss_log.item(), perf_log.item()
 
-def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, overall_stats=lambda x:x, 
+def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, 
           num_workers=5):
 
     # Fixa todas as seeds
@@ -136,7 +137,7 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, o
     for epoch in range(0, num_epochs):
         loss_train = train_step(model, dl_train, optim, loss_func, sched, device)
         loss_valid, perf = valid_step(model, dl_valid, loss_func, accuracy, device)
-        overall_param_min, overall_param_max, overall_grad_min, overall_grad_max = overall_stats(model)
+        overall_param_min, overall_param_max, overall_grad_min, overall_grad_max = modelstats.get_four_stats(model)
         logger.append((epoch, loss_train, loss_valid, perf, overall_param_min,\
             overall_param_max, overall_grad_min, overall_grad_max))
 
