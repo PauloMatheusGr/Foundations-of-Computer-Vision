@@ -1,3 +1,5 @@
+import torch
+
 def get_model_stats(model):
     """Retorna estatísticas dos parâmetros de um modelo neural.
     
@@ -63,8 +65,9 @@ def get_overall_stats(stats):
     
     return overall_param_min, overall_param_max, overall_grad_min, overall_grad_max
     
-    
+@torch.no_grad()
 def get_four_stats(model):
+    
     stats=get_model_stats(model)
     return get_overall_stats(stats)
 
