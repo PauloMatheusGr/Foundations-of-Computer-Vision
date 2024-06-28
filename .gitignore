@@ -9,3 +9,4 @@ data/checkpoints/*/
 other/
 venv_vision/
 M06_classificacao_de_imagens_naturais/data
+data_old/
