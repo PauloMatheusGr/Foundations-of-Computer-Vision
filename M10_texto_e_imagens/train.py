@@ -127,7 +127,7 @@ def valid_step(model, dl_valid, loss_func, perf_func, device):
     return loss_log.item(), perf_log.item()
 
 def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, 
-          num_workers=5):
+          num_workers=1):
     
     # Fixa todas as seeds
     seed_all(seed)
